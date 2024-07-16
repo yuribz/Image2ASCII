@@ -73,10 +73,6 @@ def main(argv):
 
     newim = Image.fromarray(to_grayscale(np.asarray(im))).resize(OUTPUT_SIZE)
 
-    print(
-        np.asarray(newim)[60, 60]
-        )
-
     ascii = to_ascii(np.asarray(newim))
 
     shape = ascii.shape
@@ -94,9 +90,5 @@ if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("Usage: python im2ascii <input file> <output file>")
         sys.exit(1)
-
-    print(
-        np.asarray(Image.open(sys.argv[1]).convert(mode = "RGB"))[180, 180]
-        )
 
     main(sys.argv)
