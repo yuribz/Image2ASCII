@@ -1,7 +1,7 @@
 import sys, math
 
 import numpy as np
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 from pathlib import Path
 
 # Step between channel value-to-pixel threshold
@@ -85,6 +85,10 @@ def main(argv : list[str]):
         im : Image = Image.open(inp).convert(mode = "RGB")
     except FileNotFoundError:
         print("The input image was not found!")
+        sys.exit(1)
+    except UnidentifiedImageError:
+        print("The input file is not an image supported by PIL!")
+        print("See https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html for supported formats.")
         sys.exit(1)
     
     # Width of the output image, as well as its ratio
@@ -189,7 +193,7 @@ def main(argv : list[str]):
     
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python im2ascii <input file> <optional: output file>")
+        print("Usage: python im2ascii <input file> <optional: output file> <optional -w tag followed by desired output image width")
         sys.exit(1)
 
     main(sys.argv)
