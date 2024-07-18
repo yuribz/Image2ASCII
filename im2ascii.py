@@ -59,10 +59,12 @@ def main(argv : list[str]):
                 arg_dict["width"] = int(argv[w_index + 1])
                 argv = argv[:w_index] + argv[w_index + 2:]
             else:
-                raise ValueError
-        except ValueError:
+                raise TypeError
+        except TypeError:
             print("-w tag must be followed by a numeric argument to specify width.")
             sys.exit(1)
+        except ValueError:
+            pass
 
         # Check for the output file destination
         try:
