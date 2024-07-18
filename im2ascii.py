@@ -96,7 +96,8 @@ def main(argv : list[str]):
     # Width of the output image, as well as its ratio
     width = arg_dict.get("width", OUTPUT_WIDTH)
 
-    ratio : int = int(math.ceil(im.size[1] / im.size[0]))
+    # Flip the ratio, otherwise the image looks stretched
+    ratio : int = int(math.ceil(im.size[0] / im.size[1])) 
     
     # Give the user an indication that something is being done
     print(f"Converting {inp} to {out}...")
