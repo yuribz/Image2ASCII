@@ -63,8 +63,8 @@ def main(argv : list[str]):
         except TypeError:
             print("-w tag must be followed by a numeric argument to specify width.")
             sys.exit(1)
-        except ValueError:
-            pass
+        except ValueError as e:
+            print(f"No width specified, defaulting to {OUTPUT_WIDTH}")
 
         # Check for the output file destination
         try:

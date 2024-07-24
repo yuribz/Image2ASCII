@@ -10,6 +10,8 @@ def main():
     root = tk.Tk()
     root.title("Im2ASCII")
 
+    # StringVars for input and output file destinations.
+    # Default output path is 'output.txt', must be changed in get_file_name
     input_path = tk.StringVar(value = "Image not selected")
     output_path = tk.StringVar(value = "output.txt")
 
@@ -35,11 +37,9 @@ def main():
         if len(filename) == 0:
             filename = "Image not selected"
         input_path.set(filename)
-        output_path.set(
-            path.dirname(input_path.get()) + path.basename(input_path.get()).stem
-        )
 
-        print(output_path.get())
+        # TODO: create output file destination
+
         file_picker_label.configure(text = input_path.get())
     
     def initiate_convert():
@@ -49,12 +49,18 @@ def main():
         """
         inp = input_path.get()
         out = output_path.get()
-        width = output_entry.get()
+        width = width_entry.get()
 
+        # TODO: This doesn't work. Figure out how to make it work
+        converting_label = ttk.Label(root, text = "Converting...")
+        converting_label.grid(column= 0, row = 3, padx = 20, pady = 20)
+
+        # Raise a dialog box if there is no image selected
         if inp == "Image not selected":
             no_file_selected()
             return
 
+        # Generate the flags that are normally passed in the command line
         flags = {}
         if width != "":
             flags["-w"] = width
@@ -64,10 +70,13 @@ def main():
         for k, v in flags.items():
             flag_list += [k, v]
 
-        i2a.main(["dummy", inp, out] + flag_list)
+        # Call the im2ASCII with the parsed arguments
+        i2a.main([__name__, inp, out] + flag_list)
+
+        converting_label.destroy()
 
 
-
+    # Tkinter widgets go here
     file_picker_button = ttk.Button(root, text = "Select an image", command=get_file_name)
     file_picker_label = ttk.Label(root, text = input_path.get(), anchor = "e", justify=tk.LEFT)
 
